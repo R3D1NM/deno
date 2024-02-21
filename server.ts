@@ -59,7 +59,18 @@ router
             context.response.body = "Data Not Found"
         }
     })
+    .get('/artist/:id',(context) => { 
+        const id = context.params.id
+        const artist : Artist | undefined = artists.find((a)=> a.id == id)
 
+        if(artist){
+            context.response.status = 200
+            context.response.body = artist
+        }else {
+            context.response.status = 404
+            context.response.body = "No matching artist"
+        }
+    })
 
 // Application
 console.log(`Server is listening on port: ${port}`);

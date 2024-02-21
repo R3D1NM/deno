@@ -42,6 +42,24 @@ router
     .get('/artists',(context) => { 
         context.response.body = artists
     })
+    .post('/artist',async (context) => { 
+        if(context.request.hasBody){
+            const body = await context.request.body
+            const newId = (artists.length +1).toString()
+            
+            const newArtist :Artist = await body.json()
+            newArtist.id = newId
+            artists.push(newArtist)
+
+            context.response.status = 201
+            context.response.body = newArtist
+            
+        } else {
+            context.response.status = 400
+            context.response.body = "Data Not Found"
+        }
+    })
+
 
 // Application
 console.log(`Server is listening on port: ${port}`);
